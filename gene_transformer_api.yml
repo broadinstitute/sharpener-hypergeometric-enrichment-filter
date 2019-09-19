@@ -1,8 +1,8 @@
 swagger: '2.0'
 info:
-  title: Hypergeometric enrichment filter
+  title: MSigDB hypergeometric enrichment
   version: 1.1.0
-  description: Gene set filter based on hypergeometric enrichment test.
+  description: Gene-list filter based on hypergeometric enrichment in MSigDB gene sets (http://software.broadinstitute.org/gsea/index.jsp).
 host: sharpener.ncats.io
 basePath: /hypergeometric_enrichment_filter
 schemes:
