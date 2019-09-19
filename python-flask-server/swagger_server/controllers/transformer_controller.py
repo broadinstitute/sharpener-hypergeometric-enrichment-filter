@@ -13,7 +13,7 @@ from swagger_server.models.attribute import Attribute
 import scipy.stats
 from numpy import array, empty
 #available at http://software.broadinstitute.org/gsea/downloads.jsp
-msigdb_gmt_file='dat/c2.all.v7.0.entrez.gmt'
+msigdb_gmt_files=['dat/c2.all.current.0.entrez.gmt', 'dat/c5.all.current.0.entrez.gmt']
 
 #END REQUIREMENTS
 
@@ -102,25 +102,26 @@ def transform_post(query):  # noqa: E501
     gene_set_N = {}
     gene_set_gene_list_gene_ids = {}
     all_gene_set_gene_ids = set()
-    msigdb_gmt_fh = open(msigdb_gmt_file)
-    for line in msigdb_gmt_fh:
-        cols = line.strip().split('\t')
-        if len(cols) < 3:
-            continue
-        gene_set_id = cols[0]
-        gene_ids = cols[2:len(cols)]
-        gene_set_gene_list_gene_ids[gene_set_id] = [x for x in gene_ids if x in genes]
-        overlap = len(gene_set_gene_list_gene_ids[gene_set_id])
-        if overlap == 0:
-            continue
-        gene_set_y_gene_list_y[gene_set_id] = overlap
-        gene_set_N[gene_set_id] = len(gene_ids)
+    for msigdb_gmt_file in msigdb_gmt_files:
+        msigdb_gmt_fh = open(msigdb_gmt_file)
+        for line in msigdb_gmt_fh:
+            cols = line.strip().split('\t')
+            if len(cols) < 3:
+                continue
+            gene_set_id = cols[0]
+            gene_ids = cols[2:len(cols)]
+            gene_set_gene_list_gene_ids[gene_set_id] = [x for x in gene_ids if x in genes]
+            overlap = len(gene_set_gene_list_gene_ids[gene_set_id])
+            if overlap == 0:
+                continue
+            gene_set_y_gene_list_y[gene_set_id] = overlap
+            gene_set_N[gene_set_id] = len(gene_ids)
 
-        gene_set_y_gene_list_n[gene_set_id] = gene_set_N[gene_set_id] - gene_set_y_gene_list_y[gene_set_id]
-        gene_set_n_gene_list_y[gene_set_id] = len(genes) - gene_set_y_gene_list_y[gene_set_id]
-        for x in gene_ids:
-            all_gene_set_gene_ids.add(x)
-    msigdb_gmt_fh.close()
+            gene_set_y_gene_list_n[gene_set_id] = gene_set_N[gene_set_id] - gene_set_y_gene_list_y[gene_set_id]
+            gene_set_n_gene_list_y[gene_set_id] = len(genes) - gene_set_y_gene_list_y[gene_set_id]
+            for x in gene_ids:
+                all_gene_set_gene_ids.add(x)
+        msigdb_gmt_fh.close()
     M = len(all_gene_set_gene_ids)
 
     gene_set_pvalues = {}
