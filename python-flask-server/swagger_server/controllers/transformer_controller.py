@@ -17,6 +17,7 @@ msigdb_gmt_files=['dat/c2.all.current.0.entrez.gmt', 'dat/c5.all.current.0.entre
 
 #END REQUIREMENTS
 
+transformer_name = 'MSigDB hypergeometric enrichment filter'
 valid_controls = ['max p-value', 'max q-value']
 default_control_values = {'max p-value': 1e-5, 'max q-value': 0.05}
 default_control_types = {'max p-value': 'double', 'max q-value': 'double'}
@@ -43,33 +44,33 @@ def entrez_gene_id(gene: GeneInfo):
             return gene.identifiers.entrez
     return None
 
-def correct_pvalues_for_multiple_testing(pvalues, correction_type = "Benjamini-Hochberg"):                
-    """                                                                                                   
-    consistent with R - print correct_pvalues_for_multiple_testing([0.0, 0.01, 0.029, 0.03, 0.031, 0.05, 0.069, 0.07, 0.071, 0.09, 0.1]) 
+def correct_pvalues_for_multiple_testing(pvalues, correction_type = "Benjamini-Hochberg"):
     """
-    pvalues = array(pvalues) 
-    n = int(pvalues.shape[0])                                                                           
+    consistent with R - print correct_pvalues_for_multiple_testing([0.0, 0.01, 0.029, 0.03, 0.031, 0.05, 0.069, 0.07, 0.071, 0.09, 0.1])
+    """
+    pvalues = array(pvalues)
+    n = int(pvalues.shape[0])
     new_pvalues = empty(n)
-    if correction_type == "Bonferroni":                                                                   
+    if correction_type == "Bonferroni":
         new_pvalues = n * pvalues
-    elif correction_type == "Bonferroni-Holm":                                                            
-        values = [ (pvalue, i) for i, pvalue in enumerate(pvalues) ]                                      
+    elif correction_type == "Bonferroni-Holm":
+        values = [ (pvalue, i) for i, pvalue in enumerate(pvalues) ]
         values.sort()
-        for rank, vals in enumerate(values):                                                              
+        for rank, vals in enumerate(values):
             pvalue, i = vals
-            new_pvalues[i] = (n-rank) * pvalue                                                            
-    elif correction_type == "Benjamini-Hochberg":                                                         
-        values = [ (pvalue, i) for i, pvalue in enumerate(pvalues) ]                                      
+            new_pvalues[i] = (n-rank) * pvalue
+    elif correction_type == "Benjamini-Hochberg":
+        values = [ (pvalue, i) for i, pvalue in enumerate(pvalues) ]
         values.sort()
-        values.reverse()                                                                                  
+        values.reverse()
         new_values = []
-        for i, vals in enumerate(values):                                                                 
+        for i, vals in enumerate(values):
             rank = n - i
-            pvalue, index = vals                                                                          
-            new_values.append((n/rank) * pvalue)                                                          
-        for i in range(0, int(n)-1):  
-            if new_values[i] < new_values[i+1]:                                                           
-                new_values[i+1] = new_values[i]                                                           
+            pvalue, index = vals
+            new_values.append((n/rank) * pvalue)
+        for i in range(0, int(n)-1):
+            if new_values[i] < new_values[i+1]:
+                new_values[i+1] = new_values[i]
         for i, vals in enumerate(values):
             pvalue, index = vals
             new_pvalues[index] = new_values[i]
@@ -159,25 +160,25 @@ def transform_post(query):  # noqa: E501
                       Attribute(
                         name = 'gene set',
                         value = gene_set_id,
-                        source = 'Hypergeometric enrichment filter'
+                        source = transformer_name
                       ))
                 final_genes[gene_entrez_id].attributes.append(
                       Attribute(
                         name = 'p-value',
                         value = gene_set_pvalues[gene_set_id],
-                        source = 'Hypergeometric enrichment filter'
+                        source = transformer_name
                       ))
                 final_genes[gene_entrez_id].attributes.append(
                       Attribute(
                         name = 'q-value',
                         value = gene_set_qvalues[gene_set_id],
-                        source = 'Hypergeometric enrichment filter'
+                        source = transformer_name
                       ))
                 final_genes[gene_entrez_id].attributes.append(
                       Attribute(
                         name = 'odds ratio',
                         value = gene_set_odds_ratios[gene_set_id],
-                        source = 'Hypergeometric enrichment filter'
+                        source = transformer_name
                       ))
                 final_gene_list.append(final_genes[gene_entrez_id])
     return final_gene_list
@@ -192,12 +193,12 @@ def transformer_info_get():  # noqa: E501
     :rtype: TransformerInfo
     """
     return TransformerInfo(
-        name = 'Hypergeometric gene set enrichment filter',
+        name = transformer_name,
         function = 'filter',
         #operation = 'enrichment',
         #ui_label = 'HyperGeomEnrich',
         #source_url = 'http://software.broadinstitute.org/gsea/downloads.jsp',
-        description = 'Gene-list filter that keeps only genes in pathways enriched for genes in the input',
+        description = 'Gene-list filter based on hypergeometric enrichment in MSigDB gene sets (http://software.broadinstitute.org/gsea/index.jsp).',
         parameters = [Parameter(x, default_control_types[x], default_control_values[x]) for x in valid_controls],
         required_attributes = ['identifiers.entrez','gene_symbol']
     )
