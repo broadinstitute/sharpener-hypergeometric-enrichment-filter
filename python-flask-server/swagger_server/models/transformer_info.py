@@ -7,6 +7,7 @@ from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.parameter import Parameter  # noqa: F401,E501
+from swagger_server.models.transformer_info_properties import TransformerInfoProperties  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -16,15 +17,21 @@ class TransformerInfo(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, function: str=None, description: str=None, parameters: List[Parameter]=None, required_attributes: List[str]=None):  # noqa: E501
+    def __init__(self, name: str=None, label: str=None, version: str=None, function: str=None, description: str=None, properties: TransformerInfoProperties=None, parameters: List[Parameter]=None, required_attributes: List[str]=None):  # noqa: E501
         """TransformerInfo - a model defined in Swagger
 
         :param name: The name of this TransformerInfo.  # noqa: E501
         :type name: str
+        :param label: The label of this TransformerInfo.  # noqa: E501
+        :type label: str
+        :param version: The version of this TransformerInfo.  # noqa: E501
+        :type version: str
         :param function: The function of this TransformerInfo.  # noqa: E501
         :type function: str
         :param description: The description of this TransformerInfo.  # noqa: E501
         :type description: str
+        :param properties: The properties of this TransformerInfo.  # noqa: E501
+        :type properties: TransformerInfoProperties
         :param parameters: The parameters of this TransformerInfo.  # noqa: E501
         :type parameters: List[Parameter]
         :param required_attributes: The required_attributes of this TransformerInfo.  # noqa: E501
@@ -32,23 +39,32 @@ class TransformerInfo(Model):
         """
         self.swagger_types = {
             'name': str,
+            'label': str,
+            'version': str,
             'function': str,
             'description': str,
+            'properties': TransformerInfoProperties,
             'parameters': List[Parameter],
             'required_attributes': List[str]
         }
 
         self.attribute_map = {
             'name': 'name',
+            'label': 'label',
+            'version': 'version',
             'function': 'function',
             'description': 'description',
+            'properties': 'properties',
             'parameters': 'parameters',
             'required_attributes': 'required_attributes'
         }
 
         self._name = name
+        self._label = label
+        self._version = version
         self._function = function
         self._description = description
+        self._properties = properties
         self._parameters = parameters
         self._required_attributes = required_attributes
 
@@ -87,6 +103,52 @@ class TransformerInfo(Model):
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
+
+    @property
+    def label(self) -> str:
+        """Gets the label of this TransformerInfo.
+
+        Short label for GUI display.  # noqa: E501
+
+        :return: The label of this TransformerInfo.
+        :rtype: str
+        """
+        return self._label
+
+    @label.setter
+    def label(self, label: str):
+        """Sets the label of this TransformerInfo.
+
+        Short label for GUI display.  # noqa: E501
+
+        :param label: The label of this TransformerInfo.
+        :type label: str
+        """
+
+        self._label = label
+
+    @property
+    def version(self) -> str:
+        """Gets the version of this TransformerInfo.
+
+        Transformer's version.  # noqa: E501
+
+        :return: The version of this TransformerInfo.
+        :rtype: str
+        """
+        return self._version
+
+    @version.setter
+    def version(self, version: str):
+        """Sets the version of this TransformerInfo.
+
+        Transformer's version.  # noqa: E501
+
+        :param version: The version of this TransformerInfo.
+        :type version: str
+        """
+
+        self._version = version
 
     @property
     def function(self) -> str:
@@ -141,6 +203,27 @@ class TransformerInfo(Model):
             raise ValueError("Invalid value for `description`, must not be `None`")  # noqa: E501
 
         self._description = description
+
+    @property
+    def properties(self) -> TransformerInfoProperties:
+        """Gets the properties of this TransformerInfo.
+
+
+        :return: The properties of this TransformerInfo.
+        :rtype: TransformerInfoProperties
+        """
+        return self._properties
+
+    @properties.setter
+    def properties(self, properties: TransformerInfoProperties):
+        """Sets the properties of this TransformerInfo.
+
+
+        :param properties: The properties of this TransformerInfo.
+        :type properties: TransformerInfoProperties
+        """
+
+        self._properties = properties
 
     @property
     def parameters(self) -> List[Parameter]:
