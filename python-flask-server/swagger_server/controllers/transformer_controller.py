@@ -7,8 +7,9 @@ from swagger_server.models.transformer_info import TransformerInfo  # noqa: E501
 from swagger_server.models.transformer_query import TransformerQuery  # noqa: E501
 from swagger_server import util
 
-from swagger_server.controllers.filter import filter
-from swagger_server.controllers.filter import transformer_info
+from swagger_server.controllers.filter import MsigdbEnrichmentFilter
+
+transformer = MsigdbEnrichmentFilter()
 
 def transform_post(query):  # noqa: E501
     """transform_post
@@ -22,7 +23,7 @@ def transform_post(query):  # noqa: E501
     """
     if connexion.request.is_json:
         query = TransformerQuery.from_dict(connexion.request.get_json())  # noqa: E501
-    return filter(query)
+    return transformer.transform(query)
 
 
 def transformer_info_get():  # noqa: E501
@@ -33,4 +34,4 @@ def transformer_info_get():  # noqa: E501
 
     :rtype: TransformerInfo
     """
-    return transformer_info()
+    return transformer.info
