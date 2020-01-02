@@ -17,7 +17,7 @@ class GeneInfo(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, gene_id: str=None, identifiers: GeneInfoIdentifiers=None, attributes: List[Attribute]=None):  # noqa: E501
+    def __init__(self, gene_id: str=None, identifiers: GeneInfoIdentifiers=None, attributes: List[Attribute]=None, source: str=None):  # noqa: E501
         """GeneInfo - a model defined in Swagger
 
         :param gene_id: The gene_id of this GeneInfo.  # noqa: E501
@@ -26,22 +26,27 @@ class GeneInfo(Model):
         :type identifiers: GeneInfoIdentifiers
         :param attributes: The attributes of this GeneInfo.  # noqa: E501
         :type attributes: List[Attribute]
+        :param source: The source of this GeneInfo.  # noqa: E501
+        :type source: str
         """
         self.swagger_types = {
             'gene_id': str,
             'identifiers': GeneInfoIdentifiers,
-            'attributes': List[Attribute]
+            'attributes': List[Attribute],
+            'source': str
         }
 
         self.attribute_map = {
             'gene_id': 'gene_id',
             'identifiers': 'identifiers',
-            'attributes': 'attributes'
+            'attributes': 'attributes',
+            'source': 'source'
         }
 
         self._gene_id = gene_id
         self._identifiers = identifiers
         self._attributes = attributes
+        self._source = source
 
     @classmethod
     def from_dict(cls, dikt) -> 'GeneInfo':
@@ -122,3 +127,26 @@ class GeneInfo(Model):
         """
 
         self._attributes = attributes
+
+    @property
+    def source(self) -> str:
+        """Gets the source of this GeneInfo.
+
+        Name of a transformer that added gene to the gene list.  # noqa: E501
+
+        :return: The source of this GeneInfo.
+        :rtype: str
+        """
+        return self._source
+
+    @source.setter
+    def source(self, source: str):
+        """Sets the source of this GeneInfo.
+
+        Name of a transformer that added gene to the gene list.  # noqa: E501
+
+        :param source: The source of this GeneInfo.
+        :type source: str
+        """
+
+        self._source = source

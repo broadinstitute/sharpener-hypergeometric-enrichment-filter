@@ -15,7 +15,7 @@ class Attribute(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, value: str=None, source: str=None):  # noqa: E501
+    def __init__(self, name: str=None, value: str=None, source: str=None, url: str=None):  # noqa: E501
         """Attribute - a model defined in Swagger
 
         :param name: The name of this Attribute.  # noqa: E501
@@ -24,22 +24,27 @@ class Attribute(Model):
         :type value: str
         :param source: The source of this Attribute.  # noqa: E501
         :type source: str
+        :param url: The url of this Attribute.  # noqa: E501
+        :type url: str
         """
         self.swagger_types = {
             'name': str,
             'value': str,
-            'source': str
+            'source': str,
+            'url': str
         }
 
         self.attribute_map = {
             'name': 'name',
             'value': 'value',
-            'source': 'source'
+            'source': 'source',
+            'url': 'url'
         }
 
         self._name = name
         self._value = value
         self._source = source
+        self._url = url
 
     @classmethod
     def from_dict(cls, dikt) -> 'Attribute':
@@ -56,6 +61,7 @@ class Attribute(Model):
     def name(self) -> str:
         """Gets the name of this Attribute.
 
+        Name of the attribute.  # noqa: E501
 
         :return: The name of this Attribute.
         :rtype: str
@@ -66,6 +72,7 @@ class Attribute(Model):
     def name(self, name: str):
         """Sets the name of this Attribute.
 
+        Name of the attribute.  # noqa: E501
 
         :param name: The name of this Attribute.
         :type name: str
@@ -79,6 +86,7 @@ class Attribute(Model):
     def value(self) -> str:
         """Gets the value of this Attribute.
 
+        Value of the attribute.  # noqa: E501
 
         :return: The value of this Attribute.
         :rtype: str
@@ -89,6 +97,7 @@ class Attribute(Model):
     def value(self, value: str):
         """Sets the value of this Attribute.
 
+        Value of the attribute.  # noqa: E501
 
         :param value: The value of this Attribute.
         :type value: str
@@ -102,6 +111,7 @@ class Attribute(Model):
     def source(self) -> str:
         """Gets the source of this Attribute.
 
+        Transformer that produced the attribute's value.  # noqa: E501
 
         :return: The source of this Attribute.
         :rtype: str
@@ -112,9 +122,35 @@ class Attribute(Model):
     def source(self, source: str):
         """Sets the source of this Attribute.
 
+        Transformer that produced the attribute's value.  # noqa: E501
 
         :param source: The source of this Attribute.
         :type source: str
         """
+        if source is None:
+            raise ValueError("Invalid value for `source`, must not be `None`")  # noqa: E501
 
         self._source = source
+
+    @property
+    def url(self) -> str:
+        """Gets the url of this Attribute.
+
+        URL for additional information.  # noqa: E501
+
+        :return: The url of this Attribute.
+        :rtype: str
+        """
+        return self._url
+
+    @url.setter
+    def url(self, url: str):
+        """Sets the url of this Attribute.
+
+        URL for additional information.  # noqa: E501
+
+        :param url: The url of this Attribute.
+        :type url: str
+        """
+
+        self._url = url

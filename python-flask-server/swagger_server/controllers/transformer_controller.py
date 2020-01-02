@@ -1,6 +1,7 @@
 import connexion
 import six
 
+from swagger_server.models.error_msg import ErrorMsg  # noqa: E501
 from swagger_server.models.gene_info import GeneInfo  # noqa: E501
 from swagger_server.models.transformer_info import TransformerInfo  # noqa: E501
 from swagger_server.models.transformer_query import TransformerQuery  # noqa: E501
