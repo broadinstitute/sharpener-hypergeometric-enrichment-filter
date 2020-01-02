@@ -4,7 +4,7 @@ import sys
 from setuptools import setup, find_packages
 
 NAME = "hypergeometric-enrichment-filter"
-VERSION = "1.2.0"
+VERSION = "1.3.0"
 
 # To install the library, run the following
 #
@@ -18,10 +18,10 @@ REQUIRES = ["connexion"]
 setup(
     name=NAME,
     version=VERSION,
-    description="Hypergeometric enrichment filter",
+    description="MSigDB hypergeometric enrichment",
     author_email="",
     url="",
-    keywords=["Swagger", "Hypergeometric enrichment filter"],
+    keywords=["Swagger", "MSigDB hypergeometric enrichment"],
     install_requires=REQUIRES,
     packages=find_packages(),
     package_data={'': ['swagger/swagger.yaml']},
@@ -29,7 +29,7 @@ setup(
     entry_points={
         'console_scripts': ['swagger_server=swagger_server.__main__:main']},
     long_description="""\
-    Gene set filter based on hypergeometric enrichment test.
+    Gene-list filter based on hypergeometric enrichment in MSigDB gene sets (http://software.broadinstitute.org/gsea/index.jsp).
     """
 )
 

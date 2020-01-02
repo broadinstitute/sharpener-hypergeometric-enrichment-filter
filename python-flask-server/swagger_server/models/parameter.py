@@ -15,7 +15,7 @@ class Parameter(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str=None, type: str=None, default: str=None, allowed_values: List[str]=None, suggested_values: str=None, lookup_url: str=None):  # noqa: E501
+    def __init__(self, name: str=None, type: str=None, default: str=None, biolink_class: str=None, allowed_values: List[str]=None, allowed_range: List[float]=None, suggested_values: str=None, lookup_url: str=None):  # noqa: E501
         """Parameter - a model defined in Swagger
 
         :param name: The name of this Parameter.  # noqa: E501
@@ -24,8 +24,12 @@ class Parameter(Model):
         :type type: str
         :param default: The default of this Parameter.  # noqa: E501
         :type default: str
+        :param biolink_class: The biolink_class of this Parameter.  # noqa: E501
+        :type biolink_class: str
         :param allowed_values: The allowed_values of this Parameter.  # noqa: E501
         :type allowed_values: List[str]
+        :param allowed_range: The allowed_range of this Parameter.  # noqa: E501
+        :type allowed_range: List[float]
         :param suggested_values: The suggested_values of this Parameter.  # noqa: E501
         :type suggested_values: str
         :param lookup_url: The lookup_url of this Parameter.  # noqa: E501
@@ -35,7 +39,9 @@ class Parameter(Model):
             'name': str,
             'type': str,
             'default': str,
+            'biolink_class': str,
             'allowed_values': List[str],
+            'allowed_range': List[float],
             'suggested_values': str,
             'lookup_url': str
         }
@@ -44,7 +50,9 @@ class Parameter(Model):
             'name': 'name',
             'type': 'type',
             'default': 'default',
+            'biolink_class': 'biolink_class',
             'allowed_values': 'allowed_values',
+            'allowed_range': 'allowed_range',
             'suggested_values': 'suggested_values',
             'lookup_url': 'lookup_url'
         }
@@ -52,7 +60,9 @@ class Parameter(Model):
         self._name = name
         self._type = type
         self._default = default
+        self._biolink_class = biolink_class
         self._allowed_values = allowed_values
+        self._allowed_range = allowed_range
         self._suggested_values = suggested_values
         self._lookup_url = lookup_url
 
@@ -147,6 +157,29 @@ class Parameter(Model):
         self._default = default
 
     @property
+    def biolink_class(self) -> str:
+        """Gets the biolink_class of this Parameter.
+
+        Biolink class of the paramater. Applicable to producers only and only one parameter can have a biolink class.  # noqa: E501
+
+        :return: The biolink_class of this Parameter.
+        :rtype: str
+        """
+        return self._biolink_class
+
+    @biolink_class.setter
+    def biolink_class(self, biolink_class: str):
+        """Sets the biolink_class of this Parameter.
+
+        Biolink class of the paramater. Applicable to producers only and only one parameter can have a biolink class.  # noqa: E501
+
+        :param biolink_class: The biolink_class of this Parameter.
+        :type biolink_class: str
+        """
+
+        self._biolink_class = biolink_class
+
+    @property
     def allowed_values(self) -> List[str]:
         """Gets the allowed_values of this Parameter.
 
@@ -168,6 +201,29 @@ class Parameter(Model):
         """
 
         self._allowed_values = allowed_values
+
+    @property
+    def allowed_range(self) -> List[float]:
+        """Gets the allowed_range of this Parameter.
+
+        Allowed range for values of the parameter.  # noqa: E501
+
+        :return: The allowed_range of this Parameter.
+        :rtype: List[float]
+        """
+        return self._allowed_range
+
+    @allowed_range.setter
+    def allowed_range(self, allowed_range: List[float]):
+        """Sets the allowed_range of this Parameter.
+
+        Allowed range for values of the parameter.  # noqa: E501
+
+        :param allowed_range: The allowed_range of this Parameter.
+        :type allowed_range: List[float]
+        """
+
+        self._allowed_range = allowed_range
 
     @property
     def suggested_values(self) -> str:
